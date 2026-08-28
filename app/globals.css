@@ -1,26 +1,182 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
 
 @theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Brand-specific tokens for the landing page */
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-light: var(--brand-light);
+  --color-brand-accent: var(--brand-accent);
+
+  /* Typography */
+  --font-serif: var(--font-serif), "Fraunces", "Playfair Display", Georgia, serif;
+  --font-sans: var(--font-sans), "Outfit", system-ui, sans-serif;
+  --font-handwriting: var(--font-handwriting), "Caveat", cursive;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.5rem;
+
+  /* Midnight champagne luxe palette */
+  --brand-dark: oklch(0.232 0.038 280.75);
+  --brand-light: oklch(0.981 0.01 72.57);
+  --brand-accent: oklch(0.767 0.139 91.07);
+
+  --background: var(--brand-light);
+  --foreground: var(--brand-dark);
+  --card: oklch(0.995 0.008 72.57);
+  --card-foreground: var(--brand-dark);
+  --popover: oklch(0.995 0.008 72.57);
+  --popover-foreground: var(--brand-dark);
+  --primary: var(--brand-dark);
+  --primary-foreground: var(--brand-light);
+  --secondary: oklch(0.95 0.012 72.57);
+  --secondary-foreground: var(--brand-dark);
+  --muted: oklch(0.95 0.012 72.57);
+  --muted-foreground: oklch(0.45 0.03 280.75);
+  --accent: var(--brand-accent);
+  --accent-foreground: var(--brand-dark);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: color-mix(in oklch, var(--brand-dark) 10%, transparent);
+  --input: color-mix(in oklch, var(--brand-dark) 12%, transparent);
+  --ring: var(--brand-accent);
+  --chart-1: var(--brand-accent);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: var(--brand-light);
+  --sidebar-foreground: var(--brand-dark);
+  --sidebar-primary: var(--brand-dark);
+  --sidebar-primary-foreground: var(--brand-light);
+  --sidebar-accent: oklch(0.95 0.012 72.57);
+  --sidebar-accent-foreground: var(--brand-dark);
+  --sidebar-border: color-mix(in oklch, var(--brand-dark) 10%, transparent);
+  --sidebar-ring: var(--brand-accent);
+}
+
+.dark {
+  --background: var(--brand-dark);
+  --foreground: var(--brand-light);
+  --card: oklch(0.28 0.04 280.75);
+  --card-foreground: var(--brand-light);
+  --popover: oklch(0.28 0.04 280.75);
+  --popover-foreground: var(--brand-light);
+  --primary: var(--brand-light);
+  --primary-foreground: var(--brand-dark);
+  --secondary: oklch(0.3 0.035 280.75);
+  --secondary-foreground: var(--brand-light);
+  --muted: oklch(0.3 0.035 280.75);
+  --muted-foreground: oklch(0.7 0.02 280.75);
+  --accent: var(--brand-accent);
+  --accent-foreground: var(--brand-dark);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: var(--brand-accent);
+  --chart-1: var(--brand-accent);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: var(--brand-light);
+  --sidebar-primary: var(--brand-accent);
+  --sidebar-primary-foreground: var(--brand-dark);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: var(--brand-light);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: var(--brand-accent);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serif);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+
+  /*
+   * Used for the fixed navigation so it automatically inverts against
+   * both the light hero and the dark feature band.
+   * The source color must be white for mix-blend-mode: difference
+   * to produce a clean inverse of whatever section scrolls behind it.
+   */
+  .nav-blend {
+    color: white;
+    mix-blend-mode: difference;
+  }
 }
