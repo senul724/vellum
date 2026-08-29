@@ -179,4 +179,32 @@
     color: white;
     mix-blend-mode: difference;
   }
+
+  @keyframes shimmer-fast {
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
+  }
+
+  @keyframes float-gentle {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-7px); }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.75; transform: scale(1.08); }
+  }
+
+  .animate-shimmer-fast {
+    background-size: 200% auto;
+    animation: shimmer-fast 4s linear infinite;
+  }
+
+  .animate-float-gentle {
+    animation: float-gentle 4.5s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 5s ease-in-out infinite;
+  }
 }
