@@ -128,11 +128,11 @@ function BirthdayStudioContent() {
 
         <WishPageRenderer data={cardData} />
 
-        {/* Vellum Footer */}
+        {/* Inviteside Footer */}
         <div className="w-full py-4 text-center text-xs text-stone-500 bg-white/80 border-t border-stone-200">
           Made with love on{" "}
           <Link href="/" className="font-serif font-bold text-stone-900 underline underline-offset-4">
-            Vellum
+            Inviteside
           </Link>
         </div>
       </>
@@ -203,7 +203,7 @@ function BirthdayStudioContent() {
 
       {/* Nav */}
       <nav className="sticky top-0 z-40 w-full px-6 md:px-8 py-4 md:py-5 flex justify-between items-center bg-white/85 backdrop-blur-md border-b border-stone-200/80 shadow-xs">
-        <Link href="/" className="text-2xl font-serif italic tracking-tight text-stone-950">Vellum.</Link>
+        <Link href="/" className="text-2xl font-serif italic tracking-tight text-stone-950">Inviteside.</Link>
         <div className="hidden md:flex gap-8 lg:gap-10 text-xs uppercase tracking-widest font-medium text-stone-600">
           <Link href="/" className="hover:text-stone-950 transition-colors">Home</Link>
           <Link href="/bday" className="text-stone-950 font-bold border-b-2 border-stone-950 pb-0.5">Birthday ✦</Link>
@@ -447,7 +447,7 @@ function BirthdayStudioContent() {
       </div>
 
       <footer className="w-full border-t border-stone-200 py-6 text-center text-xs text-stone-500 bg-white mt-10">
-        <span className="font-serif font-semibold text-stone-900">Vellum</span> • Beautiful digital birthday wishes
+        <span className="font-serif font-semibold text-stone-900">Inviteside</span> • Beautiful digital birthday wishes
       </footer>
     </main>
   );

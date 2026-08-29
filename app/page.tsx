@@ -43,7 +43,7 @@ export default function IndexPage() {
 function Navigation() {
 	return (
 		<nav className="fixed top-0 w-full z-50 px-6 md:px-8 py-5 md:py-6 flex justify-between items-center nav-blend">
-			<Link href="/" className="text-2xl font-serif italic tracking-tight">Vellum.</Link>
+			<Link href="/" className="text-2xl font-serif italic tracking-tight">Inviteside.</Link>
 			<div className="hidden md:flex gap-10 lg:gap-12 text-xs uppercase tracking-widest font-medium">
 				<Link href="/bday" className="hover:text-accent transition-colors text-amber-300 font-bold">
 					Birthday Studio ✦
@@ -104,7 +104,7 @@ function Hero() {
 					significant moments.
 				</h1>
 				<p className="text-base md:text-lg lg:text-xl text-muted-foreground font-light max-w-xl mx-auto leading-relaxed px-2">
-					Beyond simple links. Vellum provides high-fidelity digital stationery
+					Beyond simple links. Inviteside provides high-fidelity digital stationery
 					with integrated RSVP tracking for the modern host.
 				</p>
 				<div className="pt-4 md:pt-8">
@@ -941,7 +941,7 @@ function Footer() {
 		<footer className="py-16 md:py-24 px-6 md:px-8 bg-background border-t border-border">
 			<div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-12 text-left">
 				<div>
-					<div className="text-3xl font-serif italic mb-4">Vellum.</div>
+					<div className="text-3xl font-serif italic mb-4">Inviteside.</div>
 					<p className="text-sm text-muted-foreground max-w-sm font-light leading-relaxed">
 						Bespoke digital invitation suites for discerning hosts. Crafted with
 						precision, delivered with elegance.
@@ -988,8 +988,18 @@ function Footer() {
 			</div>
 
 			<div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-border text-xs text-muted-foreground/60 flex flex-col sm:flex-row justify-between gap-4">
-				<span>&copy; {new Date().getFullYear()} Vellum Inc. All rights reserved.</span>
-				<span>Designed for the modern host.</span>
+				<span>&copy; {new Date().getFullYear()} Inviteside Inc. All rights reserved.</span>
+				<span>
+					A product of{" "}
+					<a
+						href="https://kernel70.com"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="underline underline-offset-4 hover:text-foreground transition-colors"
+					>
+						Kernel70 Software Solutions
+					</a>
+				</span>
 			</div>
 		</footer>
 	);

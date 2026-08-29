@@ -21,7 +21,7 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "Vellum | Birthday Webpage Studio",
+  title: "Inviteside | Birthday Webpage Studio",
   description: "Bespoke digital celebratory experiences & invitation suites",
 };
 
