@@ -69,7 +69,7 @@ function Navigation() {
 				</a>
 
 				<a
-					href="#contact"
+					href="/pricing"
 					className="px-5 sm:px-6 py-2 bg-primary text-primary-foreground rounded-full text-xs uppercase tracking-widest font-semibold hover:opacity-90 transition-all cursor-pointer shadow-xs"
 				>
 					Get a Quote
@@ -333,15 +333,13 @@ function OccasionsShowcase() {
 					return (
 						<div
 							key={item.id}
-							className={`grid lg:grid-cols-12 gap-10 lg:gap-14 items-center ${
-								isEven ? "" : "lg:flex-row-reverse"
-							}`}
+							className={`grid lg:grid-cols-12 gap-10 lg:gap-14 items-center ${isEven ? "" : "lg:flex-row-reverse"
+								}`}
 						>
 							{/* Browser Viewport Frame Mockup (6 Columns) */}
 							<div
-								className={`lg:col-span-7 ${
-									isEven ? "lg:order-1" : "lg:order-2"
-								}`}
+								className={`lg:col-span-7 ${isEven ? "lg:order-1" : "lg:order-2"
+									}`}
 							>
 								<div className="rounded-3xl border border-border bg-card shadow-2xl overflow-hidden group transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] hover:scale-[1.01]">
 									{/* Browser Title Bar */}
@@ -388,9 +386,8 @@ function OccasionsShowcase() {
 
 							{/* Editorial Description Column (5 Columns) */}
 							<div
-								className={`lg:col-span-5 space-y-6 text-left ${
-									isEven ? "lg:order-2" : "lg:order-1"
-								}`}
+								className={`lg:col-span-5 space-y-6 text-left ${isEven ? "lg:order-2" : "lg:order-1"
+									}`}
 							>
 								<div className="space-y-3">
 									<div className="flex items-center gap-3">
