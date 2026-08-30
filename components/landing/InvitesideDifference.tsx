@@ -31,7 +31,8 @@ export function InvitesideDifference() {
 			title: "100% Bespoke. Never A Template.",
 			desc: "We don’t do cookie-cutter DIY forms. Share your floral moodboard, wedding stationery, or venue photos — our studio personally handcrafts and custom-codes an invitation tailored specifically to your event.",
 			icon: Paintbrush,
-			accentBg: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
+			accentBg:
+				"bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
 			ghostNum: "01",
 			tag: "Your Palette • Your Monogram • Custom Code",
 			preview: (
@@ -48,10 +49,22 @@ export function InvitesideDifference() {
 					{/* Custom color swatches & font preview */}
 					<div className="space-y-1.5 pt-1">
 						<div className="flex items-center gap-1.5">
-							<span className="w-5 h-5 rounded-full bg-[#C85A32] shadow-xs border border-white/20" title="Terracotta" />
-							<span className="w-5 h-5 rounded-full bg-[#4A5D4E] shadow-xs border border-white/20" title="Sage Olive" />
-							<span className="w-5 h-5 rounded-full bg-[#D4AF37] shadow-xs border border-white/20" title="Gold Foil" />
-							<span className="w-5 h-5 rounded-full bg-[#2C3E35] shadow-xs border border-white/20" title="Forest Velvet" />
+							<span
+								className="w-5 h-5 rounded-full bg-[#C85A32] shadow-xs border border-white/20"
+								title="Terracotta"
+							/>
+							<span
+								className="w-5 h-5 rounded-full bg-[#4A5D4E] shadow-xs border border-white/20"
+								title="Sage Olive"
+							/>
+							<span
+								className="w-5 h-5 rounded-full bg-[#D4AF37] shadow-xs border border-white/20"
+								title="Gold Foil"
+							/>
+							<span
+								className="w-5 h-5 rounded-full bg-[#2C3E35] shadow-xs border border-white/20"
+								title="Forest Velvet"
+							/>
 							<span className="text-[10px] font-mono text-muted-foreground ml-1">
 								Matched to your florals &amp; dress
 							</span>
@@ -71,7 +84,8 @@ export function InvitesideDifference() {
 			title: "Tactile Digital Unboxing",
 			desc: "Guests don’t just open a plain link. They experience an authentic opening ritual: tap an embossed 3D wax seal with your initials, slide a brass folio clasp, or tear open a party memo with dynamic confetti.",
 			icon: Flame,
-			accentBg: "bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20",
+			accentBg:
+				"bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20",
 			ghostNum: "02",
 			tag: "Custom Wax Seal • Clasp Folio • Confetti Tear",
 			preview: (
@@ -94,7 +108,8 @@ export function InvitesideDifference() {
 			title: "Custom Event Soundtracks",
 			desc: "Immerse your guests from the very first second. Curated acoustic strings, lo-fi beats, or ambient piano with subtle player controls set the exact emotional tone of your celebration.",
 			icon: Music,
-			accentBg: "bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
+			accentBg:
+				"bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20",
 			ghostNum: "03",
 			tag: "Acoustic Strings • Lofi Beats • Your First Dance",
 			preview: (
@@ -130,7 +145,8 @@ export function InvitesideDifference() {
 			title: "Custom RSVP & Meal Flows",
 			desc: "Tailored specifically to your reception format. Collect confirmed headcounts, custom dinner entrée choices, allergies, plus-ones, and song requests into your own dedicated private host dashboard.",
 			icon: CheckCircle2,
-			accentBg: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
+			accentBg:
+				"bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
 			ghostNum: "04",
 			tag: "Tailored Questions • Entrée Tracking • Dashboard",
 			preview: (
@@ -166,15 +182,22 @@ export function InvitesideDifference() {
 			title: "1-Tap Calendar Sync & Maps",
 			desc: "Guests add your celebration directly to Apple Calendar or Google Calendar with a single click. Integrated Google Maps, valet details, and rideshare drop coordinates ensure 100% arrival accuracy.",
 			icon: Calendar,
-			accentBg: "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
+			accentBg:
+				"bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20",
 			ghostNum: "05",
 			tag: "Apple & Google Cal • Waze & Maps GPS",
 			preview: (
 				<div className="w-full h-32 rounded-2xl bg-muted/50 border border-border/80 p-3.5 flex items-center gap-3">
 					<div className="w-16 h-20 rounded-xl bg-background border border-border flex flex-col items-center justify-center shrink-0">
-						<span className="text-[9px] font-mono text-rose-500 font-bold uppercase">OCT</span>
-						<span className="text-xl font-serif font-bold text-foreground">24</span>
-						<span className="text-[8px] font-mono text-muted-foreground">5:00 PM</span>
+						<span className="text-[9px] font-mono text-rose-500 font-bold uppercase">
+							OCT
+						</span>
+						<span className="text-xl font-serif font-bold text-foreground">
+							24
+						</span>
+						<span className="text-[8px] font-mono text-muted-foreground">
+							5:00 PM
+						</span>
 					</div>
 					<div className="space-y-1 text-left overflow-hidden">
 						<div className="flex items-center gap-1 text-[11px] font-serif font-bold text-foreground truncate">
@@ -197,7 +220,8 @@ export function InvitesideDifference() {
 			title: "100% Mobile Native",
 			desc: "Engineered specifically for mobile screens. Send in seconds via WhatsApp, iMessage, Instagram, or email with zero app downloads or account logins required for your guests.",
 			icon: Smartphone,
-			accentBg: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20",
+			accentBg:
+				"bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20",
 			ghostNum: "06",
 			tag: "WhatsApp • iMessage • 0 App Installs",
 			preview: (
@@ -220,7 +244,8 @@ export function InvitesideDifference() {
 			title: "Privacy, Hosting & Custom Domains",
 			desc: "Protect confidential corporate assemblies with encrypted PIN passcodes, or brand your celebration with your own custom web address. Every invitation includes 6 months of cloud hosting with 256-bit SSL encryption.",
 			icon: Shield,
-			accentBg: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
+			accentBg:
+				"bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20",
 			ghostNum: "07",
 			tag: "6 Mos Cloud Hosting • Custom Domains • SSL",
 			preview: (
@@ -233,7 +258,9 @@ export function InvitesideDifference() {
 					</div>
 					<div className="flex items-center justify-between text-[9px] font-mono text-muted-foreground px-1">
 						<span>SSL 256-Bit Encrypted</span>
-						<span className="text-emerald-600 dark:text-emerald-400 font-bold">White-Label</span>
+						<span className="text-emerald-600 dark:text-emerald-400 font-bold">
+							White-Label
+						</span>
 					</div>
 				</div>
 			),
@@ -285,7 +312,9 @@ export function InvitesideDifference() {
 						Invitations personally designed to compliment your day.
 					</h2>
 					<p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed">
-						Unlike DIY templates, Inviteside gives you a one-of-a-kind digital invitation, thoughtfully handcrafted and designed to reflect your personal style, event theme, and story.
+						Unlike DIY templates, Inviteside gives you a one-of-a-kind digital
+						invitation, thoughtfully handcrafted and designed to reflect your
+						personal style, event theme, and story.
 					</p>
 				</div>
 
@@ -310,10 +339,11 @@ export function InvitesideDifference() {
 							onClick={() => scroll("left")}
 							disabled={!canScrollLeft}
 							aria-label="Scroll left"
-							className={`w-10 h-10 rounded-full border border-border flex items-center justify-center transition-all cursor-pointer ${canScrollLeft
-								? "bg-card text-foreground hover:bg-muted shadow-xs hover:scale-105 active:scale-95"
-								: "opacity-35 cursor-not-allowed text-muted-foreground bg-muted/40"
-								}`}
+							className={`w-10 h-10 rounded-full border border-border flex items-center justify-center transition-all cursor-pointer ${
+								canScrollLeft
+									? "bg-card text-foreground hover:bg-muted shadow-xs hover:scale-105 active:scale-95"
+									: "opacity-35 cursor-not-allowed text-muted-foreground bg-muted/40"
+							}`}
 						>
 							<ArrowLeft className="w-4 h-4" />
 						</button>
@@ -321,56 +351,14 @@ export function InvitesideDifference() {
 							onClick={() => scroll("right")}
 							disabled={!canScrollRight}
 							aria-label="Scroll right"
-							className={`w-10 h-10 rounded-full border border-border flex items-center justify-center transition-all cursor-pointer ${canScrollRight
-								? "bg-card text-foreground hover:bg-muted shadow-xs hover:scale-105 active:scale-95"
-								: "opacity-35 cursor-not-allowed text-muted-foreground bg-muted/40"
-								}`}
+							className={`w-10 h-10 rounded-full border border-border flex items-center justify-center transition-all cursor-pointer ${
+								canScrollRight
+									? "bg-card text-foreground hover:bg-muted shadow-xs hover:scale-105 active:scale-95"
+									: "opacity-35 cursor-not-allowed text-muted-foreground bg-muted/40"
+							}`}
 						>
 							<ArrowRight className="w-4 h-4" />
 						</button>
-					</div>
-				</div>
-			</div>
-
-			{/* Studio Personalization Process Highlight Strip */}
-			<div className="grid sm:grid-cols-3 gap-3 mb-8 p-4 rounded-2xl bg-muted/30 border border-border/70 text-left">
-				<div className="flex items-start gap-3 p-2">
-					<div className="w-8 h-8 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0 text-xs font-mono font-bold">
-						01
-					</div>
-					<div className="space-y-0.5">
-						<span className="text-xs font-mono font-bold text-foreground block">
-							Share Your Vision
-						</span>
-						<span className="text-[11px] text-muted-foreground font-light leading-snug block">
-							Send your moodboard, florals, colors, venue photos, or paper invitations.
-						</span>
-					</div>
-				</div>
-				<div className="flex items-start gap-3 p-2 border-t sm:border-t-0 sm:border-l border-border/60">
-					<div className="w-8 h-8 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0 text-xs font-mono font-bold">
-						02
-					</div>
-					<div className="space-y-0.5">
-						<span className="text-xs font-mono font-bold text-foreground block">
-							Handcrafted By Our Studio
-						</span>
-						<span className="text-[11px] text-muted-foreground font-light leading-snug block">
-							We custom-code the layout, opening ritual, soundtrack, and RSVP logic from scratch.
-						</span>
-					</div>
-				</div>
-				<div className="flex items-start gap-3 p-2 border-t sm:border-t-0 sm:border-l border-border/60">
-					<div className="w-8 h-8 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0 text-xs font-mono font-bold">
-						03
-					</div>
-					<div className="space-y-0.5">
-						<span className="text-xs font-mono font-bold text-foreground block">
-							Refined Together
-						</span>
-						<span className="text-[11px] text-muted-foreground font-light leading-snug block">
-							Direct 1-on-1 collaboration with your designer with revision rounds until it’s perfect.
-						</span>
 					</div>
 				</div>
 			</div>
@@ -448,7 +436,8 @@ export function InvitesideDifference() {
 							Explore the live interactive demos.
 						</h3>
 						<p className="text-xs text-muted-foreground font-light leading-relaxed">
-							Four bespoke designs: Tuscan Wedding, Milestone Birthday, Executive Summit, and Studio Bash.
+							Four bespoke designs: Tuscan Wedding, Milestone Birthday,
+							Executive Summit, and Studio Bash.
 						</p>
 					</div>
 
@@ -467,25 +456,33 @@ export function InvitesideDifference() {
 			{/* Subtle Proof Ticker Strip */}
 			<div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-2xl bg-muted/20 border border-border/60 text-center">
 				<div className="space-y-0.5">
-					<div className="text-xl sm:text-2xl font-serif font-bold text-foreground">1-on-1 Studio</div>
+					<div className="text-xl sm:text-2xl font-serif font-bold text-foreground">
+						1-on-1 Studio
+					</div>
 					<div className="text-[11px] font-mono text-muted-foreground uppercase tracking-wider">
 						Designer Collaboration
 					</div>
 				</div>
 				<div className="space-y-0.5">
-					<div className="text-xl sm:text-2xl font-serif font-bold text-foreground">100% Bespoke</div>
+					<div className="text-xl sm:text-2xl font-serif font-bold text-foreground">
+						100% Bespoke
+					</div>
 					<div className="text-[11px] font-mono text-muted-foreground uppercase tracking-wider">
 						Zero Generic Templates
 					</div>
 				</div>
 				<div className="space-y-0.5">
-					<div className="text-xl sm:text-2xl font-serif font-bold text-foreground">6 Months</div>
+					<div className="text-xl sm:text-2xl font-serif font-bold text-foreground">
+						6 Months
+					</div>
 					<div className="text-[11px] font-mono text-muted-foreground uppercase tracking-wider">
 						Cloud Hosting Included
 					</div>
 				</div>
 				<div className="space-y-0.5">
-					<div className="text-xl sm:text-2xl font-serif font-bold text-foreground">Unlimited</div>
+					<div className="text-xl sm:text-2xl font-serif font-bold text-foreground">
+						Unlimited
+					</div>
 					<div className="text-[11px] font-mono text-muted-foreground uppercase tracking-wider">
 						Guest Sends &amp; Opens
 					</div>

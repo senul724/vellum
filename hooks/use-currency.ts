@@ -79,7 +79,7 @@ export function useCurrency() {
 							setIsDetectedLK(true);
 						}
 					})
-					.catch(() => {});
+					.catch(() => { });
 			})
 			.finally(() => {
 				setIsReady(true);

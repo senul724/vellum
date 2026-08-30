@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useCurrency, type Currency } from "@/hooks/use-currency";
 import { InvitesideDifference } from "@/components/landing/InvitesideDifference";
+import { HeroFloatingShowcase } from "@/components/landing/HeroFloatingShowcase";
 import pricingConfig from "@/data/pricing.json";
 import {
 	Sparkles,
@@ -18,16 +19,17 @@ import {
 } from "lucide-react";
 
 export default function IndexPage() {
-	const { currency } = useCurrency();
+	const { currency, isDetectedLK } = useCurrency();
+	const isSriLanka = isDetectedLK || currency === "LKR";
 
 	return (
 		<main className="bg-background font-sans text-foreground overflow-x-hidden">
 			<Navigation />
-			<Hero currency={currency} />
+			<Hero currency={currency} isSriLanka={isSriLanka} />
 			<InvitesideDifference />
-			<OccasionsShowcase />
+			<OccasionsShowcase isSriLanka={isSriLanka} />
 			<QuoteContactSection currency={currency} />
-			<Footer />
+			<Footer isSriLanka={isSriLanka} />
 		</main>
 	);
 }
@@ -38,7 +40,10 @@ export default function IndexPage() {
 function Navigation() {
 	return (
 		<nav className="fixed top-0 w-full z-50 px-6 sm:px-10 md:px-12 py-4 flex justify-between items-center bg-background/85 backdrop-blur-xl border-b border-border/40 shadow-xs">
-			<Link href="/" className="text-xl sm:text-2xl font-serif italic tracking-tight text-foreground flex items-center gap-2">
+			<Link
+				href="/"
+				className="text-xl sm:text-2xl font-serif italic tracking-tight text-foreground flex items-center gap-2"
+			>
 				<span>Inviteside.</span>
 			</Link>
 
@@ -46,14 +51,20 @@ function Navigation() {
 				<a href="#services" className="hover:text-foreground transition-colors">
 					Services
 				</a>
-				<a href="#occasions" className="hover:text-foreground transition-colors">
+				<a
+					href="#occasions"
+					className="hover:text-foreground transition-colors"
+				>
 					Occasions &amp; Demos
 				</a>
-				<Link href="/pricing" className="hover:text-foreground transition-colors">
+				<Link
+					href="/pricing"
+					className="hover:text-foreground transition-colors"
+				>
 					Pricing
 				</Link>
 				<a href="#contact" className="hover:text-foreground transition-colors">
-					Get a Quote
+					Create Yours
 				</a>
 			</div>
 
@@ -72,7 +83,7 @@ function Navigation() {
 					href="/pricing"
 					className="px-5 sm:px-6 py-2 bg-primary text-primary-foreground rounded-full text-xs uppercase tracking-widest font-semibold hover:opacity-90 transition-all cursor-pointer shadow-xs"
 				>
-					Get a Quote
+					Create Yours
 				</a>
 			</div>
 		</nav>
@@ -82,7 +93,13 @@ function Navigation() {
 /* =========================================================================
    2. HERO SECTION (Clean, Impactful, No Tabs, No Repetitive Demo Buttons)
    ========================================================================= */
-function Hero({ currency }: { currency: Currency }) {
+function Hero({
+	currency,
+	isSriLanka,
+}: {
+	currency: Currency;
+	isSriLanka: boolean;
+}) {
 	const quoteLabel =
 		currency === "LKR"
 			? `Get a Quote (From ${pricingConfig.basePackage.discountedPriceLKR.toLocaleString()} LKR)`
@@ -94,12 +111,6 @@ function Hero({ currency }: { currency: Currency }) {
 			<div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-to-tr from-amber-400/10 via-rose-400/10 to-emerald-400/10 rounded-full blur-[140px] pointer-events-none -z-10" />
 
 			<div className="space-y-6 max-w-4xl mx-auto">
-				{/* Eyebrow Pill */}
-				<div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-semibold tracking-widest uppercase shadow-xs">
-					<Sparkles className="w-3.5 h-3.5" />
-					<span>Bespoke Interactive Event Websites</span>
-				</div>
-
 				{/* Headline */}
 				<div className="space-y-2">
 					<h1 className="text-4xl sm:text-6xl md:text-7xl font-serif tracking-tight leading-[1.08] text-foreground">
@@ -109,7 +120,9 @@ function Hero({ currency }: { currency: Currency }) {
 						</span>
 					</h1>
 					<p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed pt-2">
-						Ditch generic paper cards, messy PDFs, and chaotic group chats. We design custom event websites with unboxing animations, background audio, instant RSVP tracking, and mobile polish.
+						Ditch generic paper cards, messy PDFs, and chaotic group chats. We
+						design custom event websites with unboxing animations, background
+						audio, instant RSVP tracking, and mobile polish.
 					</p>
 				</div>
 
@@ -132,92 +145,8 @@ function Hero({ currency }: { currency: Currency }) {
 				</div>
 			</div>
 
-			{/* Clean Visual Preview Showcase */}
-			<div className="mt-14 sm:mt-18 relative max-w-5xl mx-auto">
-				<div className="rounded-3xl border border-border bg-card shadow-2xl overflow-hidden text-left">
-					{/* Browser Window Header */}
-					<div className="px-5 py-3.5 border-b border-border bg-muted/40 flex items-center justify-between">
-						<div className="flex items-center gap-2">
-							<span className="w-3 h-3 rounded-full bg-red-400/80 inline-block" />
-							<span className="w-3 h-3 rounded-full bg-amber-400/80 inline-block" />
-							<span className="w-3 h-3 rounded-full bg-emerald-400/80 inline-block" />
-						</div>
-						<div className="px-4 py-1 rounded-full bg-background border border-border/80 text-[11px] font-mono text-muted-foreground flex items-center gap-2 shadow-xs">
-							<Lock className="w-3 h-3 text-emerald-500" />
-							<span>inviteside.com/event-preview</span>
-						</div>
-						<div className="text-[11px] font-mono text-muted-foreground hidden sm:block">
-							100% Mobile &amp; Desktop Optimized
-						</div>
-					</div>
-
-					{/* Clean Live Feature Composite Banner */}
-					<div className="relative p-6 sm:p-10 bg-gradient-to-br from-card via-muted/20 to-card">
-						<div className="grid md:grid-cols-12 gap-8 items-center">
-							<div className="md:col-span-7 space-y-4">
-								<div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-[11px] font-mono font-bold uppercase tracking-wider text-primary">
-									<span>✨ Handcrafted for your guests</span>
-								</div>
-								<h3 className="text-2xl sm:text-3xl font-serif font-bold text-foreground leading-tight">
-									A single link that replaces endless questions.
-								</h3>
-								<p className="text-xs sm:text-sm text-muted-foreground font-light leading-relaxed">
-									When your guests open your Inviteside page, they experience your event’s world before it even begins: smooth opening rituals, background soundtracks, one-tap calendar syncing, curated menus, and live headcount confirmation.
-								</p>
-
-								<div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
-									<div className="p-3 rounded-xl bg-background border border-border/70 shadow-xs space-y-1">
-										<span className="text-xs font-mono font-bold text-foreground block">3D Unboxing</span>
-										<span className="text-[11px] text-muted-foreground">Wax seals &amp; folios</span>
-									</div>
-									<div className="p-3 rounded-xl bg-background border border-border/70 shadow-xs space-y-1">
-										<span className="text-xs font-mono font-bold text-foreground block">Smart RSVP</span>
-										<span className="text-[11px] text-muted-foreground">Headcounts &amp; meals</span>
-									</div>
-									<div className="p-3 rounded-xl bg-background border border-border/70 shadow-xs space-y-1">
-										<span className="text-xs font-mono font-bold text-foreground block">Audio Player</span>
-										<span className="text-[11px] text-muted-foreground">Custom playlists</span>
-									</div>
-								</div>
-							</div>
-
-							<div className="md:col-span-5 flex justify-center">
-								{/* Sleek Smartphone Mockup Preview */}
-								<div className="w-full max-w-[260px] rounded-3xl border-4 border-stone-800 bg-stone-950 p-2 shadow-2xl">
-									<div className="w-20 h-3.5 bg-stone-800 rounded-full mx-auto mb-2 flex items-center justify-center">
-										<div className="w-2 h-2 rounded-full bg-stone-900" />
-									</div>
-									<div className="rounded-2xl overflow-hidden bg-card border border-stone-800 text-left p-3.5 space-y-3">
-										<div className="aspect-[4/3] rounded-xl overflow-hidden relative shadow-xs">
-											<img
-												src="/invite-botanical.jpg"
-												alt="Invite preview"
-												className="w-full h-full object-cover"
-											/>
-											<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2.5">
-												<span className="text-[10px] uppercase font-bold tracking-wider text-white">
-													Live Invitation
-												</span>
-											</div>
-										</div>
-										<div className="space-y-1">
-											<p className="text-xs font-serif font-bold text-foreground">
-												Amelia &amp; Liam
-											</p>
-											<p className="text-[10px] text-muted-foreground">
-												Florence, Italy &bull; Oct 24
-											</p>
-										</div>
-										<div className="w-full py-2 rounded-lg bg-primary text-primary-foreground text-[10px] font-mono font-bold uppercase tracking-wider text-center">
-											RSVP Confirmed (2 Guests)
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			{/* Floating UI Showcase */}
+			<HeroFloatingShowcase isSriLanka={isSriLanka} />
 		</section>
 	);
 }
@@ -229,38 +158,59 @@ function Hero({ currency }: { currency: Currency }) {
 /* =========================================================================
    4. OCCASIONS SHOWCASE (Luxury Editorial Portfolio Showcase)
    ========================================================================= */
-function OccasionsShowcase() {
+function OccasionsShowcase({ isSriLanka }: { isSriLanka: boolean }) {
 	const occasions = [
 		{
 			id: "wedding",
 			num: "01",
 			category: "Weddings & Receptions",
-			title: "Amelia & Liam's Tuscan Celebration",
-			tagline: "Romantic editorial storytelling with digital wax seal unboxing.",
-			desc: "Designed for couples who refuse generic wedding templates. Guests break an authentic digital wax seal, listen to acoustic Italian strings, browse an 8-photo travel album, view hotel accommodations, and select their dinner entrée with allergy notes.",
-			image: "/invite-botanical.jpg",
-			url: "inviteside.com/demo/wedding",
-			route: "/demo/wedding",
-			accentColor: "border-amber-500/30 text-amber-600 dark:text-amber-400 bg-amber-500/10",
-			features: [
-				"3D Wax Seal Unboxing Ritual",
-				"Curated Orchestral Audio Track",
-				"8-Photo Memory Story Gallery",
-				"Hotel & Travel Accommodations Guide",
-				"Entrée Selection & Dietary Tracking",
-			],
+			title: isSriLanka
+				? "Senuri & Kaveen's Poruwa Ceremony"
+				: "Amelia & Liam's Tuscan Celebration",
+			tagline: isSriLanka
+				? "Traditional royal Poruwa ceremony with sacred rituals & wax seal unboxing."
+				: "Romantic editorial storytelling with digital wax seal unboxing.",
+			desc: isSriLanka
+				? "Designed for couples celebrating Sri Lankan heritage with modern luxury. Guests break an authentic digital wax seal, listen to traditional Jayamangala flute scores, view Galle Face Hotel itinerary, and RSVP with Ceylon banquet preferences."
+				: "Designed for couples who refuse generic wedding templates. Guests break an authentic digital wax seal, listen to acoustic Italian strings, browse an 8-photo travel album, view hotel accommodations, and select their dinner entrée with allergy notes.",
+			image: isSriLanka
+				? "/images/wedding-preview-sl.png"
+				: "/images/wedding-preview-intl.jpg",
+			url: isSriLanka
+				? "inviteside.com/demo/weddingsl"
+				: "inviteside.com/demo/wedding",
+			route: isSriLanka ? "/demo/weddingsl" : "/demo/wedding",
+			accentColor:
+				"border-amber-500/30 text-amber-600 dark:text-amber-400 bg-amber-500/10",
+			features: isSriLanka
+				? [
+						"3D Wax Seal Unboxing Ritual",
+						"Sacred Poruwa Jayamangala Audio",
+						"Galle Face Hotel Ballroom Guide",
+						"Attire Etiquette & Auspicious Nakath Times",
+						"Ceylon Banquet RSVP & Guest Tracking",
+				  ]
+				: [
+						"3D Wax Seal Unboxing Ritual",
+						"Curated Orchestral Audio Track",
+						"8-Photo Memory Story Gallery",
+						"Hotel & Travel Accommodations Guide",
+						"Entrée Selection & Dietary Tracking",
+				  ],
 		},
 		{
 			id: "birthday",
 			num: "02",
 			category: "Milestone Birthdays",
 			title: "Sophia's 25th Milestone Soirée",
-			tagline: "Midnight sunset aesthetic with interactive 3D metallic balloons.",
+			tagline:
+				"Midnight sunset aesthetic with interactive 3D metallic balloons.",
 			desc: "A high-fashion rooftop birthday invitation built for modern celebrants. Features floating 3D chrome balloons that guests can tap to pop with confetti, live party countdown timer, signature cocktail selector, and a digital guest wishes wall.",
-			image: "/birthday-sophia.jpg",
+			image: "/images/demo-birthday-preview.png",
 			url: "inviteside.com/demo/birthday",
 			route: "/demo/birthday",
-			accentColor: "border-rose-500/30 text-rose-600 dark:text-rose-400 bg-rose-500/10",
+			accentColor:
+				"border-rose-500/30 text-rose-600 dark:text-rose-400 bg-rose-500/10",
 			features: [
 				"Interactive 3D Chrome Floating Balloons",
 				"Midnight Velvet & Sunset Palette",
@@ -274,12 +224,14 @@ function OccasionsShowcase() {
 			num: "03",
 			category: "Executive Summits & Dinners",
 			title: "Nexus Global Leadership Summit",
-			tagline: "Tactile skeuomorphic presentation folio with brushed brass hardware.",
+			tagline:
+				"Tactile skeuomorphic presentation folio with brushed brass hardware.",
 			desc: "Engineered for confidential assemblies, venture summits, and private executive dinners. Guests click a brushed brass clasp to unclasp an executive leatherette dossier, revealing their encrypted digital pass, Chatham House protocol, and black-car valet instructions.",
-			image: "/hero-every-occasion.jpg",
+			image: "/images/demo-business-preview.png",
 			url: "inviteside.com/demo/business",
 			route: "/demo/business",
-			accentColor: "border-slate-500/30 text-slate-700 dark:text-slate-300 bg-slate-500/10",
+			accentColor:
+				"border-slate-500/30 text-slate-700 dark:text-slate-300 bg-slate-500/10",
 			features: [
 				"Skeuomorphic Folio with Brass Clasp",
 				"VIP PVC Delegate Pass with Barcode",
@@ -293,12 +245,14 @@ function OccasionsShowcase() {
 			num: "04",
 			category: "Office & Studio Bashes",
 			title: "Slack is Muted. The Bar is Open.",
-			tagline: "High-energy company celebration with interactive Slack status switcher.",
+			tagline:
+				"High-energy company celebration with interactive Slack status switcher.",
 			desc: "Cancel your Friday standup. Give your coworkers an unboring office party invitation with an internal memo unbox, interactive Slack status changer, open bar drink wristbands, Golden Mug Superlative Awards, and DJ song requests.",
-			image: "/office-party.jpg",
+			image: "/images/demo-party-preview.png",
 			url: "inviteside.com/demo/party",
 			route: "/demo/party",
-			accentColor: "border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10",
+			accentColor:
+				"border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10",
 			features: [
 				"Confidential Company Memo Unboxing",
 				"Interactive Slack Status Switcher (OOO 🌴)",
@@ -310,7 +264,10 @@ function OccasionsShowcase() {
 	];
 
 	return (
-		<section id="occasions" className="py-24 px-6 max-w-6xl mx-auto border-t border-border/40">
+		<section
+			id="occasions"
+			className="py-24 px-6 max-w-6xl mx-auto border-t border-border/40"
+		>
 			{/* Section Header */}
 			<div className="text-center space-y-3 mb-20">
 				<div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-xs font-mono font-bold tracking-widest uppercase shadow-xs">
@@ -321,7 +278,9 @@ function OccasionsShowcase() {
 					Crafted for the events that matter most.
 				</h2>
 				<p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed">
-					Four distinct aesthetics. Four completely tailored experiences. Explore the live specimen demos below to test the animations, audio, and RSVP mechanics.
+					Four distinct aesthetics. Four completely tailored experiences.
+					Explore the live specimen demos below to test the animations, audio,
+					and RSVP mechanics.
 				</p>
 				<div className="w-16 h-[2px] bg-primary mx-auto mt-2" />
 			</div>
@@ -333,13 +292,15 @@ function OccasionsShowcase() {
 					return (
 						<div
 							key={item.id}
-							className={`grid lg:grid-cols-12 gap-10 lg:gap-14 items-center ${isEven ? "" : "lg:flex-row-reverse"
-								}`}
+							className={`grid lg:grid-cols-12 gap-10 lg:gap-14 items-center ${
+								isEven ? "" : "lg:flex-row-reverse"
+							}`}
 						>
 							{/* Browser Viewport Frame Mockup (6 Columns) */}
 							<div
-								className={`lg:col-span-7 ${isEven ? "lg:order-1" : "lg:order-2"
-									}`}
+								className={`lg:col-span-7 ${
+									isEven ? "lg:order-1" : "lg:order-2"
+								}`}
 							>
 								<div className="rounded-3xl border border-border bg-card shadow-2xl overflow-hidden group transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] hover:scale-[1.01]">
 									{/* Browser Title Bar */}
@@ -386,8 +347,9 @@ function OccasionsShowcase() {
 
 							{/* Editorial Description Column (5 Columns) */}
 							<div
-								className={`lg:col-span-5 space-y-6 text-left ${isEven ? "lg:order-2" : "lg:order-1"
-									}`}
+								className={`lg:col-span-5 space-y-6 text-left ${
+									isEven ? "lg:order-2" : "lg:order-1"
+								}`}
 							>
 								<div className="space-y-3">
 									<div className="flex items-center gap-3">
@@ -421,7 +383,10 @@ function OccasionsShowcase() {
 									</span>
 									<div className="space-y-1.5">
 										{item.features.map((feat, i) => (
-											<div key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
+											<div
+												key={i}
+												className="flex items-center gap-2 text-xs text-muted-foreground"
+											>
 												<Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
 												<span>{feat}</span>
 											</div>
@@ -448,8 +413,6 @@ function OccasionsShowcase() {
 	);
 }
 
-
-
 /* =========================================================================
    6. GET A QUOTE (Email Form + Direct WhatsApp Link)
    ========================================================================= */
@@ -475,7 +438,10 @@ function QuoteContactSection({ currency }: { currency: Currency }) {
 			: `Hi Inviteside! I'm planning an event and would like a custom invite website quote (first 100 hosts offer, starting from $${pricingConfig.basePackage.discountedPriceUSD}).`;
 
 	return (
-		<section id="contact" className="py-20 px-6 max-w-6xl mx-auto border-t border-border/40">
+		<section
+			id="contact"
+			className="py-20 px-6 max-w-6xl mx-auto border-t border-border/40"
+		>
 			<div className="text-center space-y-2 mb-14">
 				<span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-primary block">
 					Start Your Project
@@ -484,7 +450,8 @@ function QuoteContactSection({ currency }: { currency: Currency }) {
 					Get Your Custom Invite Quote
 				</h2>
 				<p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto font-light leading-relaxed pt-1">
-					Tell us about your event. We&apos;ll send over a custom concept and flat-rate quote within a few hours.
+					Tell us about your event. We&apos;ll send over a custom concept and
+					flat-rate quote within a few hours.
 				</p>
 				<div className="w-16 h-[2px] bg-primary mx-auto mt-4" />
 			</div>
@@ -517,7 +484,9 @@ function QuoteContactSection({ currency }: { currency: Currency }) {
 										type="email"
 										required
 										value={form.email}
-										onChange={(e) => setForm({ ...form, email: e.target.value })}
+										onChange={(e) =>
+											setForm({ ...form, email: e.target.value })
+										}
 										placeholder="e.g. liam@example.com"
 										className="w-full px-4 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:border-primary transition-colors"
 									/>
@@ -531,12 +500,16 @@ function QuoteContactSection({ currency }: { currency: Currency }) {
 									</label>
 									<select
 										value={form.occasion}
-										onChange={(e) => setForm({ ...form, occasion: e.target.value })}
+										onChange={(e) =>
+											setForm({ ...form, occasion: e.target.value })
+										}
 										className="w-full px-4 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:border-primary transition-colors cursor-pointer"
 									>
 										<option value="wedding">💍 Wedding Celebration</option>
 										<option value="birthday">🎂 Milestone Birthday</option>
-										<option value="business">💼 Corporate Summit / Dinner</option>
+										<option value="business">
+											💼 Corporate Summit / Dinner
+										</option>
 										<option value="party">🌴 Studio or Office Party</option>
 										<option value="other">✨ Other Special Gathering</option>
 									</select>
@@ -559,12 +532,16 @@ function QuoteContactSection({ currency }: { currency: Currency }) {
 							<div className="space-y-1.5">
 								<label className="block text-xs font-mono uppercase tracking-wider text-muted-foreground font-semibold flex items-center justify-between">
 									<span>Event Notes or Vision</span>
-									<span className="text-[10px] text-muted-foreground font-normal">Optional</span>
+									<span className="text-[10px] text-muted-foreground font-normal">
+										Optional
+									</span>
 								</label>
 								<textarea
 									rows={4}
 									value={form.message}
-									onChange={(e) => setForm({ ...form, message: e.target.value })}
+									onChange={(e) =>
+										setForm({ ...form, message: e.target.value })
+									}
 									placeholder="Tell us any specific ideas, number of guests, or favorite aesthetic..."
 									className="w-full px-4 py-3 rounded-xl border border-border bg-background text-sm focus:outline-none focus:border-primary transition-colors resize-none"
 								/>
@@ -587,7 +564,10 @@ function QuoteContactSection({ currency }: { currency: Currency }) {
 								Quote Request Received, {form.name}!
 							</h3>
 							<p className="text-sm text-muted-foreground max-w-md mx-auto font-light leading-relaxed">
-								Our design team has received your inquiry for your {form.occasion} invite page. We will reach out to <strong className="text-foreground">{form.email}</strong> shortly with a custom concept and quote!
+								Our design team has received your inquiry for your{" "}
+								{form.occasion} invite page. We will reach out to{" "}
+								<strong className="text-foreground">{form.email}</strong>{" "}
+								shortly with a custom concept and quote!
 							</p>
 							<button
 								onClick={() => setSubmitted(false)}
@@ -610,7 +590,9 @@ function QuoteContactSection({ currency }: { currency: Currency }) {
 							Need a fast response or rush turnaround?
 						</h3>
 						<p className="text-xs sm:text-sm text-muted-foreground font-light leading-relaxed">
-							Chat directly with our design team on WhatsApp. Share your date, guest count, or reference links for instant pricing, live walkthroughs, and same-day turnaround.
+							Chat directly with our design team on WhatsApp. Share your date,
+							guest count, or reference links for instant pricing, live
+							walkthroughs, and same-day turnaround.
 						</p>
 					</div>
 
@@ -620,7 +602,8 @@ function QuoteContactSection({ currency }: { currency: Currency }) {
 							<span>Average Response Time: &lt; 15 Minutes</span>
 						</div>
 						<p className="text-[11px] text-muted-foreground font-light">
-							Available Monday through Saturday for custom design inquiries &amp; rush delivery.
+							Available Monday through Saturday for custom design inquiries
+							&amp; rush delivery.
 						</p>
 					</div>
 
@@ -642,42 +625,64 @@ function QuoteContactSection({ currency }: { currency: Currency }) {
 /* =========================================================================
    7. FOOTER
    ========================================================================= */
-function Footer() {
+function Footer({ isSriLanka }: { isSriLanka: boolean }) {
 	return (
-		<footer className="py-16 px-6 bg-muted/40 border-t border-border text-center sm:text-left">
+		<footer className="border-t border-border/40 py-12 px-6 bg-muted/20">
 			<div className="max-w-6xl mx-auto space-y-10">
 				<div className="flex flex-col sm:flex-row items-center justify-between gap-6 border-b border-border pb-10">
 					<div className="space-y-1">
-						<Link href="/" className="text-2xl font-serif italic tracking-tight text-foreground">
+						<Link
+							href="/"
+							className="text-2xl font-serif italic tracking-tight text-foreground"
+						>
 							Inviteside.
 						</Link>
 						<p className="text-xs text-muted-foreground font-light">
-							Unboring invite pages and bespoke event websites for every occasion.
+							Unboring invite pages and bespoke event websites for every
+							occasion.
 						</p>
 					</div>
 
 					{/* Demo Links (Clean secondary footer links) */}
 					<div className="flex flex-wrap items-center justify-center gap-5 text-xs font-mono">
-						<Link href="/pricing" className="text-muted-foreground hover:text-foreground transition-colors">
+						<Link
+							href="/pricing"
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
 							Pricing
 						</Link>
-						<Link href="/demo/wedding" className="text-muted-foreground hover:text-foreground transition-colors">
+						<Link
+							href={isSriLanka ? "/demo/weddingsl" : "/demo/wedding"}
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
 							Wedding Demo
 						</Link>
-						<Link href="/demo/birthday" className="text-muted-foreground hover:text-foreground transition-colors">
+						<Link
+							href="/demo/birthday"
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
 							Birthday Demo
 						</Link>
-						<Link href="/demo/business" className="text-muted-foreground hover:text-foreground transition-colors">
+						<Link
+							href="/demo/business"
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
 							Business Demo
 						</Link>
-						<Link href="/demo/party" className="text-muted-foreground hover:text-foreground transition-colors">
+						<Link
+							href="/demo/party"
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
 							Office Party Demo
 						</Link>
 					</div>
 				</div>
 
 				<div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground font-light">
-					<p>&copy; {new Date().getFullYear()} Inviteside Studio. All rights reserved.</p>
+					<p>
+						&copy; {new Date().getFullYear()} Inviteside Studio. All rights
+						reserved.
+					</p>
 					<p>
 						A product of{" "}
 						<a
