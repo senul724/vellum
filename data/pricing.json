@@ -1,0 +1,40 @@
+{
+  "launchOffer": {
+    "totalSpots": 100,
+    "claimedSpots": 1
+  },
+  "basePackage": {
+    "priceUSD": 69,
+    "priceLKR": 6000,
+    "discountedPriceUSD": 36,
+    "discountedPriceLKR": 3000
+  },
+  "specials": {
+    "wedding": {
+      "priceUSD": 89,
+      "priceLKR": 7500,
+      "discountedPriceUSD": 49,
+      "discountedPriceLKR": 4000
+    },
+    "birthday": {
+      "priceUSD": 64,
+      "priceLKR": 5000,
+      "discountedPriceUSD": 39,
+      "discountedPriceLKR": 3000
+    }
+  },
+  "addons": {
+    "rsvp": {
+      "priceUSD": 45,
+      "priceLKR": 3600,
+      "discountedPriceUSD": 25,
+      "discountedPriceLKR": 2000
+    },
+    "customDomain": {
+      "priceUSD": 20,
+      "priceLKR": 4000,
+      "discountedPriceUSD": 20,
+      "discountedPriceLKR": 4000
+    }
+  }
+}
