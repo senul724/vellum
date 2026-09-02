@@ -16,6 +16,7 @@ import {
 	MessageCircle,
 	Check,
 	Clock,
+	Mail,
 } from "lucide-react";
 
 export default function IndexPage() {
@@ -69,16 +70,6 @@ function Navigation() {
 			</div>
 
 			<div className="flex items-center gap-3">
-				<a
-					href="https://wa.me/?text=Hi%20Inviteside!%20I'd%20like%20to%20get%20a%20quote%20for%20an%20invite%20page."
-					target="_blank"
-					rel="noopener noreferrer"
-					className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold tracking-wider hover:bg-emerald-500/20 transition-all"
-				>
-					<MessageCircle className="w-3.5 h-3.5" />
-					<span>WhatsApp</span>
-				</a>
-
 				<a
 					href="/pricing"
 					className="px-5 sm:px-6 py-2 bg-primary text-primary-foreground rounded-full text-xs uppercase tracking-widest font-semibold hover:opacity-90 transition-all cursor-pointer shadow-xs"
@@ -189,14 +180,14 @@ function OccasionsShowcase({ isSriLanka }: { isSriLanka: boolean }) {
 						"Galle Face Hotel Ballroom Guide",
 						"Attire Etiquette & Auspicious Nakath Times",
 						"Ceylon Banquet RSVP & Guest Tracking",
-				  ]
+					]
 				: [
 						"3D Wax Seal Unboxing Ritual",
 						"Curated Orchestral Audio Track",
 						"8-Photo Memory Story Gallery",
 						"Hotel & Travel Accommodations Guide",
 						"Entrée Selection & Dietary Tracking",
-				  ],
+					],
 		},
 		{
 			id: "birthday",
@@ -426,9 +417,16 @@ function QuoteContactSection({ currency }: { currency: Currency }) {
 	});
 	const [submitted, setSubmitted] = useState(false);
 
+	const getMailtoUrl = () => {
+		const subject = `Custom Invite Quote Request - ${form.occasion.toUpperCase()} (${form.name || "Inquiry"})`;
+		const body = `Hi Inviteside Team,\n\nI would like to get a quote for a custom invite page.\n\n• Name: ${form.name}\n• Email: ${form.email}\n• Occasion: ${form.occasion}\n• Estimated Date: ${form.date || "Not specified"}\n• Notes / Vision: ${form.message || "None"}\n\nLooking forward to hearing from you!`;
+		return `mailto:info@inviteside.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+	};
+
 	const handleQuoteSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!form.name || !form.email) return;
+		window.location.href = getMailtoUrl();
 		setSubmitted(true);
 	};
 
@@ -554,6 +552,16 @@ function QuoteContactSection({ currency }: { currency: Currency }) {
 								<Send className="w-4 h-4" />
 								<span>Submit Quote Request</span>
 							</button>
+
+							<p className="text-xs text-muted-foreground text-center pt-1 font-mono">
+								Or email us directly at{" "}
+								<a
+									href="mailto:info@inviteside.com"
+									className="text-primary hover:underline font-semibold"
+								>
+									info@inviteside.com
+								</a>
+							</p>
 						</form>
 					) : (
 						<div className="py-12 text-center space-y-4">
@@ -561,20 +569,33 @@ function QuoteContactSection({ currency }: { currency: Currency }) {
 								<CheckCircle2 className="w-7 h-7" />
 							</div>
 							<h3 className="text-2xl font-serif font-bold text-foreground">
-								Quote Request Received, {form.name}!
+								Quote Request Prepared, {form.name}!
 							</h3>
 							<p className="text-sm text-muted-foreground max-w-md mx-auto font-light leading-relaxed">
-								Our design team has received your inquiry for your{" "}
-								{form.occasion} invite page. We will reach out to{" "}
-								<strong className="text-foreground">{form.email}</strong>{" "}
-								shortly with a custom concept and quote!
+								Your email client has been prompted to send your inquiry to{" "}
+								<a
+									href={getMailtoUrl()}
+									className="font-semibold text-primary underline"
+								>
+									info@inviteside.com
+								</a>
+								. If it didn&apos;t open automatically, click the button below:
 							</p>
-							<button
-								onClick={() => setSubmitted(false)}
-								className="text-xs font-mono text-primary hover:underline pt-2"
-							>
-								Send another inquiry
-							</button>
+							<div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+								<a
+									href={getMailtoUrl()}
+									className="px-5 py-2.5 rounded-full bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider hover:opacity-90 transition-all inline-flex items-center gap-2"
+								>
+									<Mail className="w-3.5 h-3.5" />
+									<span>Send via Email App</span>
+								</a>
+								<button
+									onClick={() => setSubmitted(false)}
+									className="text-xs font-mono text-muted-foreground hover:text-foreground transition-colors px-3 py-2"
+								>
+									Edit inquiry
+								</button>
+							</div>
 						</div>
 					)}
 				</div>
@@ -590,9 +611,9 @@ function QuoteContactSection({ currency }: { currency: Currency }) {
 							Need a fast response or rush turnaround?
 						</h3>
 						<p className="text-xs sm:text-sm text-muted-foreground font-light leading-relaxed">
-							Chat directly with our design team on WhatsApp. Share your date,
-							guest count, or reference links for instant pricing, live
-							walkthroughs, and same-day turnaround.
+							Chat directly with our team. Share your date, guest count, or
+							reference links for instant pricing, live walkthroughs, and
+							same-day turnaround.
 						</p>
 					</div>
 
@@ -608,13 +629,13 @@ function QuoteContactSection({ currency }: { currency: Currency }) {
 					</div>
 
 					<a
-						href={`https://wa.me/?text=${encodeURIComponent(whatsappText)}`}
+						href={`https://wa.me/94773035132?text=${encodeURIComponent(whatsappText)}`}
 						target="_blank"
 						rel="noopener noreferrer"
 						className="w-full py-4 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer hover:scale-102"
 					>
 						<MessageCircle className="w-4 h-4" />
-						<span>Chat on WhatsApp Now</span>
+						<span>Chat on WhatsApp</span>
 					</a>
 				</div>
 			</div>
@@ -630,7 +651,7 @@ function Footer({ isSriLanka }: { isSriLanka: boolean }) {
 		<footer className="border-t border-border/40 py-12 px-6 bg-muted/20">
 			<div className="max-w-6xl mx-auto space-y-10">
 				<div className="flex flex-col sm:flex-row items-center justify-between gap-6 border-b border-border pb-10">
-					<div className="space-y-1">
+					<div className="space-y-1 text-center sm:text-left">
 						<Link
 							href="/"
 							className="text-2xl font-serif italic tracking-tight text-foreground"
@@ -640,6 +661,15 @@ function Footer({ isSriLanka }: { isSriLanka: boolean }) {
 						<p className="text-xs text-muted-foreground font-light">
 							Unboring invite pages and bespoke event websites for every
 							occasion.
+						</p>
+						<p className="text-xs text-muted-foreground font-mono pt-1">
+							Inquiries:{" "}
+							<a
+								href="mailto:info@inviteside.com"
+								className="text-foreground hover:text-primary transition-colors underline underline-offset-2"
+							>
+								info@inviteside.com
+							</a>
 						</p>
 					</div>
 
@@ -675,6 +705,20 @@ function Footer({ isSriLanka }: { isSriLanka: boolean }) {
 						>
 							Office Party Demo
 						</Link>
+						<a
+							href="mailto:info@inviteside.com"
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
+							info@inviteside.com
+						</a>
+						<a
+							href="https://wa.me/94773035132"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
+							WhatsApp (+94 773035132)
+						</a>
 					</div>
 				</div>
 

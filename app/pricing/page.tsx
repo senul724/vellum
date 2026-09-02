@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useCurrency, type Currency } from "@/hooks/use-currency";
+import { useCurrency } from "@/hooks/use-currency";
 import pricingConfig from "@/data/pricing.json";
 import {
-	Sparkles,
 	Check,
 	MessageCircle,
 	Mail,
@@ -16,11 +15,9 @@ import {
 	Clock,
 	Send,
 	X,
-	Info,
 	CheckSquare,
 	Square,
 	ExternalLink,
-	Tag,
 } from "lucide-react";
 
 type SpecialId = "none" | "wedding" | "birthday";
@@ -44,9 +41,11 @@ const SPECIALS: SpecialOption[] = [
 	{
 		id: "none",
 		title: "None (Standard Base Only)",
-		subtitle: "Clean, elegant invitation with event details, maps, and calendar sync.",
+		subtitle:
+			"Clean, elegant invitation with event details, maps, and calendar sync.",
 		icon: Briefcase,
-		accent: "border-slate-500/40 text-slate-700 dark:text-slate-300 bg-slate-500/10",
+		accent:
+			"border-slate-500/40 text-slate-700 dark:text-slate-300 bg-slate-500/10",
 		badge: "Standard Base",
 		priceUSD: 0,
 		priceLKR: 0,
@@ -62,7 +61,8 @@ const SPECIALS: SpecialOption[] = [
 	{
 		id: "wedding",
 		title: "Wedding Special",
-		subtitle: "Editorial luxury ceremony page with romantic audio score, wax seal ritual, and love story photo gallery.",
+		subtitle:
+			"Editorial luxury ceremony page with romantic audio score, wax seal ritual, and love story photo gallery.",
 		icon: Heart,
 		accent: "border-amber-500/40 text-amber-500 bg-amber-500/10",
 		badge: "Most Romantic",
@@ -81,7 +81,8 @@ const SPECIALS: SpecialOption[] = [
 	{
 		id: "birthday",
 		title: "Birthday Special",
-		subtitle: "High-energy celebration with curated party soundtrack, interactive 3D floating balloons, and confetti unboxing.",
+		subtitle:
+			"High-energy celebration with curated party soundtrack, interactive 3D floating balloons, and confetti unboxing.",
 		icon: PartyPopper,
 		accent: "border-rose-500/40 text-rose-500 bg-rose-500/10",
 		badge: "Celebration",
@@ -100,7 +101,8 @@ const SPECIALS: SpecialOption[] = [
 ];
 
 export default function PricingPage() {
-	const { currency } = useCurrency();
+	const { currency, isDetectedLK } = useCurrency();
+	const isSriLanka = isDetectedLK || currency === "LKR";
 
 	// Pricing State (Default: Base Package only)
 	const [selectedSpecialId, setSelectedSpecialId] = useState<SpecialId>("none");
@@ -112,7 +114,10 @@ export default function PricingPage() {
 	const claimedSpots = pricingConfig.launchOffer?.claimedSpots ?? 1;
 	const totalSpots = pricingConfig.launchOffer?.totalSpots ?? 100;
 	const remainingSpots = Math.max(0, totalSpots - claimedSpots);
-	const progressPercent = Math.min(100, Math.max(1, (claimedSpots / totalSpots) * 100));
+	const progressPercent = Math.min(
+		100,
+		Math.max(1, (claimedSpots / totalSpots) * 100),
+	);
 
 	// Base Package Pricing from @/data/pricing.json
 	const baseRegularPriceUSD = pricingConfig.basePackage.priceUSD;
@@ -128,18 +133,27 @@ export default function PricingPage() {
 
 	const domainRegularPriceUSD = pricingConfig.addons.customDomain.priceUSD;
 	const domainRegularPriceLKR = pricingConfig.addons.customDomain.priceLKR;
-	const domainDiscountedPriceUSD = pricingConfig.addons.customDomain.discountedPriceUSD;
-	const domainDiscountedPriceLKR = pricingConfig.addons.customDomain.discountedPriceLKR;
+	const domainDiscountedPriceUSD =
+		pricingConfig.addons.customDomain.discountedPriceUSD;
+	const domainDiscountedPriceLKR =
+		pricingConfig.addons.customDomain.discountedPriceLKR;
 
 	// Selected Special Details
 	const currentSpecial =
 		SPECIALS.find((s) => s.id === selectedSpecialId) || SPECIALS[0];
 
 	// Active (Discounted) Costs
-	const baseCost = currency === "LKR" ? baseDiscountedPriceLKR : baseDiscountedPriceUSD;
+	const baseCost =
+		currency === "LKR" ? baseDiscountedPriceLKR : baseDiscountedPriceUSD;
 	const specialCost =
-		currency === "LKR" ? currentSpecial.discountedPriceLKR : currentSpecial.discountedPriceUSD;
-	const rsvpCost = hasRsvp ? (currency === "LKR" ? rsvpDiscountedPriceLKR : rsvpDiscountedPriceUSD) : 0;
+		currency === "LKR"
+			? currentSpecial.discountedPriceLKR
+			: currentSpecial.discountedPriceUSD;
+	const rsvpCost = hasRsvp
+		? currency === "LKR"
+			? rsvpDiscountedPriceLKR
+			: rsvpDiscountedPriceUSD
+		: 0;
 	const domainCost = hasCustomDomain
 		? currency === "LKR"
 			? domainDiscountedPriceLKR
@@ -149,17 +163,23 @@ export default function PricingPage() {
 	const totalPrice = baseCost + specialCost + rsvpCost + domainCost;
 
 	// Regular (Full) Costs
-	const baseRegularCost = currency === "LKR" ? baseRegularPriceLKR : baseRegularPriceUSD;
+	const baseRegularCost =
+		currency === "LKR" ? baseRegularPriceLKR : baseRegularPriceUSD;
 	const specialRegularCost =
 		currency === "LKR" ? currentSpecial.priceLKR : currentSpecial.priceUSD;
-	const rsvpRegularCost = hasRsvp ? (currency === "LKR" ? rsvpRegularPriceLKR : rsvpRegularPriceUSD) : 0;
+	const rsvpRegularCost = hasRsvp
+		? currency === "LKR"
+			? rsvpRegularPriceLKR
+			: rsvpRegularPriceUSD
+		: 0;
 	const domainRegularCost = hasCustomDomain
 		? currency === "LKR"
 			? domainRegularPriceLKR
 			: domainRegularPriceUSD
 		: 0;
 
-	const totalRegularPrice = baseRegularCost + specialRegularCost + rsvpRegularCost + domainRegularCost;
+	const totalRegularPrice =
+		baseRegularCost + specialRegularCost + rsvpRegularCost + domainRegularCost;
 	const totalSavings = totalRegularPrice - totalPrice;
 
 	const formattedTotal =
@@ -198,6 +218,16 @@ export default function PricingPage() {
 (I understand this pricing is an estimate and we can mix & match as needed!)
 Could you share the next steps?`;
 
+	const emailSubject = `Inviteside Invite Website Quote Inquiry`;
+	const emailBody = `Hi Inviteside! I'd like to get started with an invite website (First 100 Hosts Discount):
+• ${breakdownText}
+• Estimated Total: ${formattedTotal}${totalSavings > 0 ? ` (Standard: ${formattedRegularTotal}, You save ${formattedSavings})` : ""}
+
+(I understand this pricing is an estimate and we can mix & match as needed!)
+Could you share the next steps?`;
+
+	const emailMailtoUrl = `mailto:info@inviteside.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+
 	return (
 		<main className="min-h-screen bg-background font-sans text-foreground overflow-x-hidden">
 			<PricingNavbar />
@@ -212,7 +242,9 @@ Could you share the next steps?`;
 							<span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
 						</span>
 						<span className="text-foreground font-semibold">
-							Host <span className="text-primary font-bold">#{claimedSpots}</span> of {totalSpots} Claimed
+							Host{" "}
+							<span className="text-primary font-bold">#{claimedSpots}</span> of{" "}
+							{totalSpots} Claimed
 						</span>
 					</div>
 					<div className="hidden sm:block w-1 h-1 rounded-full bg-muted-foreground/40" />
@@ -248,10 +280,10 @@ Could you share the next steps?`;
 							? `${baseDiscountedPriceLKR.toLocaleString()} LKR`
 							: `$${baseDiscountedPriceUSD}`}
 					</strong>{" "}
-					for normal parties and corporate events. Includes <strong>6 months of cloud hosting</strong> with zero ongoing subscriptions.
+					for normal parties and corporate events. Includes{" "}
+					<strong>6 months of cloud hosting</strong> with zero ongoing
+					subscriptions.
 				</p>
-
-
 			</section>
 
 			{/* Main Interactive Configurator */}
@@ -276,7 +308,8 @@ Could you share the next steps?`;
 							</div>
 
 							<p className="text-xs text-muted-foreground font-light">
-								Best for normal parties, corporate dinners, milestone bashes, and executive gatherings.
+								Best for normal parties, corporate dinners, milestone bashes,
+								and executive gatherings.
 							</p>
 
 							{/* Base Package Card */}
@@ -287,7 +320,8 @@ Could you share the next steps?`;
 											Standard Custom Invitation Page
 										</h3>
 										<p className="text-xs text-muted-foreground font-light">
-											Personally handcrafted mobile-native webpage with instant delivery.
+											Personally handcrafted mobile-native webpage with instant
+											delivery.
 										</p>
 									</div>
 									<div className="text-left sm:text-right shrink-0">
@@ -304,7 +338,11 @@ Could you share the next steps?`;
 											</span>
 										</div>
 										<span className="inline-block text-[10px] font-mono font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full mt-0.5">
-											First 100 Rate (Save {currency === "LKR" ? `${(baseRegularPriceLKR - baseDiscountedPriceLKR).toLocaleString()} LKR` : `$${baseRegularPriceUSD - baseDiscountedPriceUSD}`})
+											First 100 Rate (Save{" "}
+											{currency === "LKR"
+												? `${(baseRegularPriceLKR - baseDiscountedPriceLKR).toLocaleString()} LKR`
+												: `$${baseRegularPriceUSD - baseDiscountedPriceUSD}`}
+											)
 										</span>
 									</div>
 								</div>
@@ -328,7 +366,9 @@ Could you share the next steps?`;
 									</div>
 									<div className="flex items-center gap-2">
 										<Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-										<span>100% Mobile Native (WhatsApp &amp; iMessage ready)</span>
+										<span>
+											100% Mobile Native (WhatsApp &amp; iMessage ready)
+										</span>
 									</div>
 									<div className="flex items-center gap-2">
 										<Check className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
@@ -350,7 +390,8 @@ Could you share the next steps?`;
 							</div>
 
 							<p className="text-xs text-muted-foreground font-light">
-								Upgrade your invitation with tailored audio soundtracks, tactile opening rituals, and photo galleries.
+								Upgrade your invitation with tailored audio soundtracks, tactile
+								opening rituals, and photo galleries.
 							</p>
 
 							<div className="space-y-3 pt-1">
@@ -363,10 +404,11 @@ Could you share the next steps?`;
 										<div
 											key={spec.id}
 											onClick={() => setSelectedSpecialId(spec.id)}
-											className={`p-4 sm:p-5 rounded-2xl border text-left cursor-pointer transition-all duration-200 flex flex-col justify-between ${isSelected
-												? "border-primary bg-card ring-2 ring-primary/20 shadow-md"
-												: "border-border bg-card/60 hover:bg-card hover:border-primary/40 shadow-xs"
-												}`}
+											className={`p-4 sm:p-5 rounded-2xl border text-left cursor-pointer transition-all duration-200 flex flex-col justify-between ${
+												isSelected
+													? "border-primary bg-card ring-2 ring-primary/20 shadow-md"
+													: "border-border bg-card/60 hover:bg-card hover:border-primary/40 shadow-xs"
+											}`}
 										>
 											<div className="flex items-start justify-between gap-4">
 												<div className="flex items-start gap-3.5">
@@ -389,7 +431,10 @@ Could you share the next steps?`;
 														{/* Feature checklist */}
 														<div className="grid sm:grid-cols-2 gap-1.5 pt-2 text-[11px] text-muted-foreground">
 															{spec.features.map((feat, i) => (
-																<div key={i} className="flex items-center gap-1.5">
+																<div
+																	key={i}
+																	className="flex items-center gap-1.5"
+																>
 																	<Check className="w-3 h-3 text-primary shrink-0" />
 																	<span>{feat}</span>
 																</div>
@@ -419,7 +464,10 @@ Could you share the next steps?`;
 															</span>
 															{hasDiscount && (
 																<span className="text-[9px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold block">
-																	Save {currency === "LKR" ? `${(spec.priceLKR - spec.discountedPriceLKR).toLocaleString()} LKR` : `$${spec.priceUSD - spec.discountedPriceUSD}`}
+																	Save{" "}
+																	{currency === "LKR"
+																		? `${(spec.priceLKR - spec.discountedPriceLKR).toLocaleString()} LKR`
+																		: `$${spec.priceUSD - spec.discountedPriceUSD}`}
 																</span>
 															)}
 														</div>
@@ -455,17 +503,19 @@ Could you share the next steps?`;
 							</div>
 
 							<p className="text-xs text-muted-foreground font-light">
-								Enhance any invite with real-time guest headcount tracking and your own custom web address.
+								Enhance any invite with real-time guest headcount tracking and
+								your own custom web address.
 							</p>
 
 							<div className="space-y-3 pt-1">
 								{/* 1. Smart RSVP & Dashboard */}
 								<div
 									onClick={() => setHasRsvp(!hasRsvp)}
-									className={`p-4 sm:p-5 rounded-2xl border cursor-pointer transition-all flex items-start justify-between gap-4 ${hasRsvp
-										? "border-primary bg-primary/5 shadow-xs"
-										: "border-border bg-card/60 hover:bg-card"
-										}`}
+									className={`p-4 sm:p-5 rounded-2xl border cursor-pointer transition-all flex items-start justify-between gap-4 ${
+										hasRsvp
+											? "border-primary bg-primary/5 shadow-xs"
+											: "border-border bg-card/60 hover:bg-card"
+									}`}
 								>
 									<div className="flex items-start gap-3.5">
 										<div className="mt-0.5">
@@ -485,7 +535,10 @@ Could you share the next steps?`;
 												</span>
 											</div>
 											<p className="text-xs text-muted-foreground font-light leading-relaxed">
-												Collect real-time confirmed headcounts, entrée choices, dietary restrictions, cocktail choices, plus-ones, and song requests in your own dedicated, private host dashboard.
+												Collect real-time confirmed headcounts, entrée choices,
+												dietary restrictions, cocktail choices, plus-ones, and
+												song requests in your own dedicated, private host
+												dashboard.
 											</p>
 										</div>
 									</div>
@@ -499,11 +552,17 @@ Could you share the next steps?`;
 											</span>
 										)}
 										<span className="text-xs sm:text-sm font-mono font-bold text-foreground block">
-											+{currency === "LKR" ? `${rsvpDiscountedPriceLKR.toLocaleString()} LKR` : `$${rsvpDiscountedPriceUSD}`}
+											+
+											{currency === "LKR"
+												? `${rsvpDiscountedPriceLKR.toLocaleString()} LKR`
+												: `$${rsvpDiscountedPriceUSD}`}
 										</span>
 										{rsvpRegularPriceUSD > rsvpDiscountedPriceUSD && (
 											<span className="text-[9px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold block">
-												Save {currency === "LKR" ? `${(rsvpRegularPriceLKR - rsvpDiscountedPriceLKR).toLocaleString()} LKR` : `$${rsvpRegularPriceUSD - rsvpDiscountedPriceUSD}`}
+												Save{" "}
+												{currency === "LKR"
+													? `${(rsvpRegularPriceLKR - rsvpDiscountedPriceLKR).toLocaleString()} LKR`
+													: `$${rsvpRegularPriceUSD - rsvpDiscountedPriceUSD}`}
 											</span>
 										)}
 									</div>
@@ -512,10 +571,11 @@ Could you share the next steps?`;
 								{/* 2. Custom Domain */}
 								<div
 									onClick={() => setHasCustomDomain(!hasCustomDomain)}
-									className={`p-4 sm:p-5 rounded-2xl border cursor-pointer transition-all flex items-start justify-between gap-4 ${hasCustomDomain
-										? "border-primary bg-primary/5 shadow-xs"
-										: "border-border bg-card/60 hover:bg-card"
-										}`}
+									className={`p-4 sm:p-5 rounded-2xl border cursor-pointer transition-all flex items-start justify-between gap-4 ${
+										hasCustomDomain
+											? "border-primary bg-primary/5 shadow-xs"
+											: "border-border bg-card/60 hover:bg-card"
+									}`}
 								>
 									<div className="flex items-start gap-3.5">
 										<div className="mt-0.5">
@@ -535,16 +595,24 @@ Could you share the next steps?`;
 												</span>
 											</div>
 											<p className="text-xs text-muted-foreground font-light leading-relaxed">
-												Use your own bespoke web address (e.g. <code>yournames.com</code> or <code>companyparty.com</code>) with dedicated SSL certificate instead of a standard inviteside link.
+												Use your own bespoke web address (e.g.{" "}
+												<code>yournames.com</code> or{" "}
+												<code>companyparty.com</code>) with dedicated SSL
+												certificate instead of a standard inviteside link.
 											</p>
 										</div>
 									</div>
 
 									<div className="text-right shrink-0">
 										<span className="text-xs sm:text-sm font-mono font-bold text-foreground block">
-											+{currency === "LKR" ? `${domainDiscountedPriceLKR.toLocaleString()} LKR` : `$${domainDiscountedPriceUSD}`}
+											+
+											{currency === "LKR"
+												? `${domainDiscountedPriceLKR.toLocaleString()} LKR`
+												: `$${domainDiscountedPriceUSD}`}
 										</span>
-										<span className="text-[10px] font-mono text-muted-foreground">flat fee</span>
+										<span className="text-[10px] font-mono text-muted-foreground">
+											flat fee
+										</span>
 									</div>
 								</div>
 							</div>
@@ -568,7 +636,9 @@ Could you share the next steps?`;
 									</span>
 								</div>
 								<h3 className="font-serif font-bold text-2xl text-foreground">
-									{currentSpecial.id !== "none" ? currentSpecial.title : "Base Invitation Package"}
+									{currentSpecial.id !== "none"
+										? currentSpecial.title
+										: "Base Invitation Package"}
 								</h3>
 								<p className="text-xs text-muted-foreground font-light">
 									Mix and match package tailored for your celebration.
@@ -599,7 +669,8 @@ Could you share the next steps?`;
 									<div className="flex items-center justify-between text-foreground">
 										<span>{currentSpecial.title}</span>
 										<div className="text-right">
-											{currentSpecial.priceUSD > currentSpecial.discountedPriceUSD && (
+											{currentSpecial.priceUSD >
+												currentSpecial.discountedPriceUSD && (
 												<span className="text-muted-foreground line-through mr-1.5 text-[11px]">
 													{currency === "LKR"
 														? `+${currentSpecial.priceLKR.toLocaleString()} LKR`
@@ -652,11 +723,15 @@ Could you share the next steps?`;
 
 								<div className="flex items-center justify-between text-muted-foreground">
 									<span>6 Months Cloud Hosting &amp; SSL</span>
-									<span className="text-emerald-500 font-semibold">FREE Included</span>
+									<span className="text-emerald-500 font-semibold">
+										FREE Included
+									</span>
 								</div>
 								<div className="flex items-center justify-between text-muted-foreground">
 									<span>Mobile Native Optimization</span>
-									<span className="text-emerald-500 font-semibold">FREE Included</span>
+									<span className="text-emerald-500 font-semibold">
+										FREE Included
+									</span>
 								</div>
 							</div>
 
@@ -668,7 +743,9 @@ Could you share the next steps?`;
 									<span className="text-xs font-mono uppercase text-muted-foreground block font-medium">
 										Estimated Total
 									</span>
-									<span className="text-[10px] text-muted-foreground">One-time flat fee</span>
+									<span className="text-[10px] text-muted-foreground">
+										One-time flat fee
+									</span>
 								</div>
 								<div className="text-right">
 									{totalSavings > 0 && (
@@ -685,7 +762,9 @@ Could you share the next steps?`;
 							{/* Savings Banner Pill */}
 							{totalSavings > 0 && (
 								<div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 flex items-center justify-between text-xs font-mono">
-									<span className="font-bold">🎉 First 100 Hosts Discount:</span>
+									<span className="font-bold">
+										🎉 First 100 Hosts Discount:
+									</span>
 									<span className="font-bold text-emerald-600 dark:text-emerald-400">
 										Save {formattedSavings}
 									</span>
@@ -694,14 +773,18 @@ Could you share the next steps?`;
 
 							{/* Disclaimer Callout */}
 							<p className="text-[11px] text-muted-foreground font-light leading-relaxed bg-muted/20 p-3 rounded-xl border border-border/60">
-								💬 <em>Pricing is just for an idea. You can mix and match to your exact preference or request custom features — just talk to us!</em>
+								💬{" "}
+								<em>
+									Pricing is just for an idea. You can mix and match to your
+									exact preference or request custom features — just talk to us!
+								</em>
 							</p>
 
 							{/* Action Buttons */}
 							<div className="space-y-3 pt-1">
 								{/* Button 1: WhatsApp */}
 								<a
-									href={`https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`}
+									href={`https://wa.me/94773035132?text=${encodeURIComponent(whatsappMessage)}`}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="w-full py-3.5 sm:py-4 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer"
@@ -711,19 +794,27 @@ Could you share the next steps?`;
 								</a>
 
 								{/* Button 2: Email Inquiry */}
-								<button
-									type="button"
-									onClick={() => setIsEmailModalOpen(true)}
+								<a
+									href={emailMailtoUrl}
 									className="w-full py-3 rounded-full border border-border bg-background hover:bg-muted text-foreground text-xs font-mono font-semibold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs"
 								>
 									<Mail className="w-3.5 h-3.5 text-muted-foreground" />
 									<span>Inquire via Email</span>
-								</button>
+								</a>
 							</div>
 
-							<div className="flex items-center justify-center gap-2 text-[11px] font-mono text-muted-foreground text-center pt-1">
-								<Clock className="w-3 h-3 text-emerald-500" />
-								<span>Average Turnaround: 24–48 Hours</span>
+							<div className="flex items-center justify-between text-[11px] font-mono text-muted-foreground pt-1 px-1">
+								<div className="flex items-center gap-1.5">
+									<Clock className="w-3 h-3 text-emerald-500" />
+									<span>Turnaround: 24–48 Hours</span>
+								</div>
+								<button
+									type="button"
+									onClick={() => setIsEmailModalOpen(true)}
+									className="hover:text-foreground underline transition-colors cursor-pointer"
+								>
+									Custom notes form →
+								</button>
 							</div>
 						</div>
 					</div>
@@ -740,27 +831,32 @@ Could you share the next steps?`;
 					</h3>
 
 					<p className="text-sm sm:text-base text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
-						This calculator gives you an instant estimate with our first 100 users discount. Every event is unique—you can mix and match any features, add custom sections, or request bespoke animations. <strong>Just talk to us and we&apos;ll tailor a package to your exact budget!</strong>
+						This calculator gives you an instant estimate with our first 100
+						users discount. Every event is unique—you can mix and match any
+						features, add custom sections, or request bespoke animations.{" "}
+						<strong>
+							Just talk to us and we&apos;ll tailor a package to your exact
+							budget!
+						</strong>
 					</p>
 
 					<div className="pt-2 flex flex-wrap items-center justify-center gap-3">
 						<a
-							href={`https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`}
+							href={`https://wa.me/94773035132?text=${encodeURIComponent(whatsappMessage)}`}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider transition-all shadow-md flex items-center gap-2 cursor-pointer"
 						>
 							<MessageCircle className="w-4 h-4" />
-							<span>Chat with Us on WhatsApp</span>
+							<span>Chat with Us on WhatsApp (+94 773035132)</span>
 						</a>
-						<button
-							type="button"
-							onClick={() => setIsEmailModalOpen(true)}
+						<a
+							href={emailMailtoUrl}
 							className="px-6 py-3 rounded-full border border-border bg-background hover:bg-muted text-foreground text-xs sm:text-sm font-mono font-semibold uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer shadow-xs"
 						>
 							<Mail className="w-4 h-4 text-muted-foreground" />
-							<span>Send Custom Request</span>
-						</button>
+							<span>Send Request to info@inviteside.com</span>
+						</a>
 					</div>
 				</div>
 			</section>
@@ -784,7 +880,8 @@ Could you share the next steps?`;
 						Frequently Asked Questions
 					</h3>
 					<p className="text-xs sm:text-sm text-muted-foreground font-light">
-						Everything you need to know about our mix-and-match packages and early-bird rates.
+						Everything you need to know about our mix-and-match packages and
+						early-bird rates.
 					</p>
 				</div>
 
@@ -794,7 +891,10 @@ Could you share the next steps?`;
 							What is the First 100 Hosts Discount?
 						</h4>
 						<p>
-							To celebrate the launch of Inviteside Studio, our first 100 event hosts receive exclusive introductory pricing across all packages and specials. Once the 100 spots are filled, pricing will return to standard rates.
+							To celebrate the launch of Inviteside Studio, our first 100 event
+							hosts receive exclusive introductory pricing across all packages
+							and specials. Once the 100 spots are filled, pricing will return
+							to standard rates.
 						</p>
 					</div>
 
@@ -803,7 +903,10 @@ Could you share the next steps?`;
 							Can I mix and match different features?
 						</h4>
 						<p>
-							Yes, absolutely! Our pricing is completely modular. You can start with the base package and pick any combination of soundtracks, unboxing animations, RSVP systems, or custom domains. Just talk to us and we&apos;ll set up exactly what you need.
+							Yes, absolutely! Our pricing is completely modular. You can start
+							with the base package and pick any combination of soundtracks,
+							unboxing animations, RSVP systems, or custom domains. Just talk to
+							us and we&apos;ll set up exactly what you need.
 						</p>
 					</div>
 
@@ -812,7 +915,9 @@ Could you share the next steps?`;
 							How long does it take to build?
 						</h4>
 						<p>
-							Standard pages are completed within 24 to 48 hours after receiving your event details, photo assets, and music preferences. 24-hour rush turnaround is available upon request.
+							Standard pages are completed within 24 to 48 hours after receiving
+							your event details, photo assets, and music preferences. 24-hour
+							rush turnaround is available upon request.
 						</p>
 					</div>
 
@@ -821,7 +926,10 @@ Could you share the next steps?`;
 							How long does my invitation stay online?
 						</h4>
 						<p>
-							Every invitation package includes 6 months of premium cloud hosting with SSL security, giving you plenty of time before and after your celebration. Extended hosting is also available upon request if you wish to keep your page active indefinitely.
+							Every invitation package includes 6 months of premium cloud
+							hosting with SSL security, giving you plenty of time before and
+							after your celebration. Extended hosting is also available upon
+							request if you wish to keep your page active indefinitely.
 						</p>
 					</div>
 
@@ -830,7 +938,10 @@ Could you share the next steps?`;
 							How do guests access my invitation?
 						</h4>
 						<p>
-							You receive a custom web link (e.g. inviteside.com/your-names or your own custom domain) that you can easily copy and paste into WhatsApp, iMessage, Instagram DMs, or email with zero app downloads.
+							You receive a custom web link (e.g. inviteside.com/your-names or
+							your own custom domain) that you can easily copy and paste into
+							WhatsApp, iMessage, Instagram DMs, or email with zero app
+							downloads.
 						</p>
 					</div>
 
@@ -839,13 +950,16 @@ Could you share the next steps?`;
 							How do I view and manage RSVP responses?
 						</h4>
 						<p>
-							You get access to a dedicated, private host dashboard where you can see guest submissions update in real time—including confirmed headcounts, meal selections, dietary restrictions, plus-ones, and personal guest messages.
+							You get access to a dedicated, private host dashboard where you
+							can see guest submissions update in real time—including confirmed
+							headcounts, meal selections, dietary restrictions, plus-ones, and
+							personal guest messages.
 						</p>
 					</div>
 				</div>
 			</section>
 
-			<PricingFooter />
+			<PricingFooter isSriLanka={isSriLanka} />
 		</main>
 	);
 }
@@ -874,9 +988,16 @@ function EmailInquiryModal({
 	const [notes, setNotes] = useState("");
 	const [isSubmitted, setIsSubmitted] = useState(false);
 
+	const getModalMailtoUrl = () => {
+		const subject = `Inviteside Custom Quote Inquiry - ${name}`;
+		const body = `Hi Inviteside Team,\n\nI'd like to get started with an invite website (First 100 Hosts Discount):\n\n• Selected: ${addonsText}\n• Estimated Total: ${formattedTotal}${totalSavingsText ? ` (${totalSavingsText})` : ""}\n\nEvent Details:\n• Name: ${name}\n• Email: ${email}\n• Date: ${date || "Not specified"}\n• Notes / Vision:\n${notes || "None"}\n\nCould you please share the next steps?`;
+		return `mailto:info@inviteside.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+	};
+
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!name || !email) return;
+		window.location.href = getModalMailtoUrl();
 		setIsSubmitted(true);
 	};
 
@@ -901,13 +1022,18 @@ function EmailInquiryModal({
 								Custom Invite Quote
 							</h3>
 							<p className="text-xs text-muted-foreground font-light">
-								Offer Total: <strong className="text-foreground">{formattedTotal}</strong>
+								Offer Total:{" "}
+								<strong className="text-foreground">{formattedTotal}</strong>
 								{totalSavingsText && (
 									<span className="text-muted-foreground ml-1.5">
-										(Regular: <span className="line-through">{formattedRegularTotal}</span>, You save {totalSavingsText})
+										(Regular:{" "}
+										<span className="line-through">
+											{formattedRegularTotal}
+										</span>
+										, You save {totalSavingsText})
 									</span>
-								)}
-								{" "}&bull; Selected: {addonsText}
+								)}{" "}
+								&bull; Selected: {addonsText}
 							</p>
 						</div>
 
@@ -972,8 +1098,18 @@ function EmailInquiryModal({
 							className="w-full py-3.5 rounded-full bg-primary text-primary-foreground text-xs font-mono font-bold uppercase tracking-wider hover:opacity-90 transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
 						>
 							<Send className="w-3.5 h-3.5" />
-							<span>Send Inquiry Now</span>
+							<span>Send Inquiry (Opens Email)</span>
 						</button>
+
+						<p className="text-[11px] text-muted-foreground font-mono text-center pt-1">
+							Or email us directly at{" "}
+							<a
+								href="mailto:info@inviteside.com"
+								className="text-primary hover:underline font-semibold"
+							>
+								info@inviteside.com
+							</a>
+						</p>
 					</form>
 				) : (
 					<div className="py-8 text-center space-y-3">
@@ -981,18 +1117,30 @@ function EmailInquiryModal({
 							<CheckCircle2 className="w-6 h-6" />
 						</div>
 						<h3 className="text-xl font-serif font-bold text-foreground">
-							Inquiry Received, {name}!
+							Inquiry Prepared, {name}!
 						</h3>
 						<p className="text-xs text-muted-foreground font-light max-w-sm mx-auto leading-relaxed">
-							Our design team has received your mix-and-match request with the first 100 hosts discount locked in. We will review your selections and reach out to <strong className="text-foreground">{email}</strong> within a few hours!
+							Your email app has been opened to send your mix-and-match request
+							to{" "}
+							<strong className="text-foreground">info@inviteside.com</strong>.
+							If it didn&apos;t open automatically, click below:
 						</p>
-						<button
-							type="button"
-							onClick={onClose}
-							className="px-6 py-2 rounded-full bg-muted text-foreground text-xs font-mono uppercase tracking-wider font-semibold hover:bg-muted/80 transition-colors cursor-pointer mt-2"
-						>
-							Close
-						</button>
+						<div className="pt-2 flex items-center justify-center gap-3">
+							<a
+								href={getModalMailtoUrl()}
+								className="px-5 py-2 rounded-full bg-primary text-primary-foreground text-xs font-mono uppercase tracking-wider font-semibold hover:opacity-90 transition-all inline-flex items-center gap-1.5"
+							>
+								<Mail className="w-3.5 h-3.5" />
+								<span>Open in Email App</span>
+							</a>
+							<button
+								type="button"
+								onClick={onClose}
+								className="px-5 py-2 rounded-full bg-muted text-foreground text-xs font-mono uppercase tracking-wider font-semibold hover:bg-muted/80 transition-colors cursor-pointer"
+							>
+								Close
+							</button>
+						</div>
 					</div>
 				)}
 			</div>
@@ -1006,12 +1154,18 @@ function EmailInquiryModal({
 function PricingNavbar() {
 	return (
 		<nav className="fixed top-0 w-full z-40 px-6 sm:px-12 py-4 flex justify-between items-center bg-background/85 backdrop-blur-xl border-b border-border/40 shadow-xs">
-			<Link href="/" className="text-xl sm:text-2xl font-serif italic tracking-tight text-foreground flex items-center gap-2">
+			<Link
+				href="/"
+				className="text-xl sm:text-2xl font-serif italic tracking-tight text-foreground flex items-center gap-2"
+			>
 				<span>Inviteside.</span>
 			</Link>
 
-			<div className="flex items-center gap-4 text-xs font-mono">
-				<Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">
+			<div className="flex items-center gap-3 sm:gap-4 text-xs font-mono">
+				<Link
+					href="/"
+					className="text-muted-foreground hover:text-foreground transition-colors"
+				>
 					← Back to Home
 				</Link>
 			</div>
@@ -1019,33 +1173,98 @@ function PricingNavbar() {
 	);
 }
 
-function PricingFooter() {
+function PricingFooter({ isSriLanka }: { isSriLanka: boolean }) {
 	return (
-		<footer className="py-12 px-6 bg-muted/40 border-t border-border text-center sm:text-left">
-			<div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground font-light">
-				<div className="space-y-1">
-					<Link href="/" className="font-serif italic text-lg text-foreground">
-						Inviteside.
-					</Link>
-					<p>&copy; {new Date().getFullYear()} Inviteside Studio. All rights reserved.</p>
+		<footer className="border-t border-border/40 py-12 px-6 bg-muted/20">
+			<div className="max-w-6xl mx-auto space-y-10">
+				<div className="flex flex-col sm:flex-row items-center justify-between gap-6 border-b border-border pb-10">
+					<div className="space-y-1 text-center sm:text-left">
+						<Link
+							href="/"
+							className="text-2xl font-serif italic tracking-tight text-foreground"
+						>
+							Inviteside.
+						</Link>
+						<p className="text-xs text-muted-foreground font-light">
+							Unboring invite pages and bespoke event websites for every
+							occasion.
+						</p>
+						<p className="text-xs text-muted-foreground font-mono pt-1">
+							Inquiries:{" "}
+							<a
+								href="mailto:info@inviteside.com"
+								className="text-foreground hover:text-primary transition-colors underline underline-offset-2"
+							>
+								info@inviteside.com
+							</a>
+						</p>
+					</div>
+
+					{/* Demo Links (Clean secondary footer links) */}
+					<div className="flex flex-wrap items-center justify-center gap-5 text-xs font-mono">
+						<Link
+							href="/pricing"
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
+							Pricing
+						</Link>
+						<Link
+							href={isSriLanka ? "/demo/weddingsl" : "/demo/wedding"}
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
+							Wedding Demo
+						</Link>
+						<Link
+							href="/demo/birthday"
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
+							Birthday Demo
+						</Link>
+						<Link
+							href="/demo/business"
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
+							Business Demo
+						</Link>
+						<Link
+							href="/demo/party"
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
+							Office Party Demo
+						</Link>
+						<a
+							href="mailto:info@inviteside.com"
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
+							info@inviteside.com
+						</a>
+						<a
+							href="https://wa.me/94773035132"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-muted-foreground hover:text-foreground transition-colors"
+						>
+							WhatsApp (+94 773035132)
+						</a>
+					</div>
 				</div>
 
-				<div className="flex flex-wrap items-center justify-center gap-5 font-mono text-xs">
-					<Link href="/" className="hover:text-foreground transition-colors">
-						Home
-					</Link>
-					<Link href="/demo/wedding" className="hover:text-foreground transition-colors">
-						Wedding Demo
-					</Link>
-					<Link href="/demo/birthday" className="hover:text-foreground transition-colors">
-						Birthday Demo
-					</Link>
-					<Link href="/demo/business" className="hover:text-foreground transition-colors">
-						Business Demo
-					</Link>
-					<Link href="/demo/party" className="hover:text-foreground transition-colors">
-						Party Demo
-					</Link>
+				<div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground font-light">
+					<p>
+						&copy; {new Date().getFullYear()} Inviteside Studio. All rights
+						reserved.
+					</p>
+					<p>
+						A product of{" "}
+						<a
+							href="https://kernel70.com"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="font-medium text-foreground hover:underline"
+						>
+							Kernel70 Software Solutions
+						</a>
+					</p>
 				</div>
 			</div>
 		</footer>
