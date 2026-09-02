@@ -91,11 +91,6 @@ function Hero({
 	currency: Currency;
 	isSriLanka: boolean;
 }) {
-	const quoteLabel =
-		currency === "LKR"
-			? `Get a Quote (From ${pricingConfig.basePackage.discountedPriceLKR.toLocaleString()} LKR)`
-			: `Get a Quote (From $${pricingConfig.basePackage.discountedPriceUSD})`;
-
 	return (
 		<section className="relative pt-32 sm:pt-38 pb-20 px-6 max-w-6xl mx-auto text-center overflow-hidden">
 			{/* Ambient Lighting */}
@@ -131,7 +126,7 @@ function Hero({
 						href="/pricing"
 						className="px-7 sm:px-8 py-3.5 sm:py-4 rounded-full border border-border bg-card hover:bg-muted/60 text-xs sm:text-sm font-semibold uppercase tracking-widest transition-all shadow-xs hover:scale-105 active:scale-95 flex items-center gap-2"
 					>
-						<span>{quoteLabel}</span>
+						<span>Get a Quote</span>
 					</Link>
 				</div>
 			</div>
